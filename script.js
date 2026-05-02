@@ -579,14 +579,45 @@ document.addEventListener('keydown', (e) => {
     generateIdeas();
     generateBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-  // Escape closes modal
+  // Escape closes modal and chatbot
   if (e.code === 'Escape') {
     closeShareModal();
+    const chatWindow = $('#chatbotWindow');
+    if (chatWindow && !chatWindow.classList.contains('hidden')) {
+      chatWindow.classList.add('hidden');
+    }
   }
 });
 
 // ──────────────────────────────────────────────
-// 12. INIT
+// 12. CHATBOT WIDGET
+// ──────────────────────────────────────────────
+
+const chatbotToggle = $('#chatbotToggle');
+const chatbotWindow = $('#chatbotWindow');
+const chatbotClose = $('#chatbotClose');
+
+if (chatbotToggle && chatbotWindow && chatbotClose) {
+  chatbotToggle.addEventListener('click', () => {
+    chatbotWindow.classList.toggle('hidden');
+    // Swap icon between chat and close
+    const icon = chatbotToggle.querySelector('.chatbot-toggle-icon');
+    if (chatbotWindow.classList.contains('hidden')) {
+      icon.textContent = '💬';
+    } else {
+      icon.textContent = '✕';
+    }
+  });
+
+  chatbotClose.addEventListener('click', () => {
+    chatbotWindow.classList.add('hidden');
+    const icon = chatbotToggle.querySelector('.chatbot-toggle-icon');
+    icon.textContent = '💬';
+  });
+}
+
+// ──────────────────────────────────────────────
+// 13. INIT
 // ──────────────────────────────────────────────
 
 function init() {
